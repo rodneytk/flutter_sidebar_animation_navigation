@@ -12,8 +12,8 @@ class SidebarMenuClipper extends CustomClipper<Path> {
     Path path = Path();
     path.moveTo(0, 0);
     path.quadraticBezierTo(0, 8, 10, 16);
-    path.quadraticBezierTo(width - 1, height / 2 - 20, width, height / 2);
-    path.quadraticBezierTo(width + 1, height / 2 + 20, 10, height - 16);
+    path.quadraticBezierTo(width, height / 2 - 25, width, height / 2);
+    path.quadraticBezierTo(width, height / 2 + 25, 10, height - 16);
     path.quadraticBezierTo(0, height - 8, 0, height);
     path.close();
 
