@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sidebar_animation_navigation/sidebar/sidebar_layout.dart';
+import 'package:flutter_sidebar_animation_navigation/theme.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,10 +11,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Sidebar Animation & Navigation Demo',
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: Colors.white,
+        scaffoldBackgroundColor: backgroundColor,
+        primaryColor: primaryColor,
       ),
       home: SidebarLayout(),
     );

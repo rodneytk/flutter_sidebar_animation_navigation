@@ -2,8 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sidebar_animation_navigation/bloc.navigation_bloc/navigation_bloc.dart';
-import 'package:flutter_sidebar_animation_navigation/sidebar/sidebar_items.dart';
+import 'package:flutter_sidebar_animation_navigation/sidebar/sidebar_item.dart';
 import 'package:flutter_sidebar_animation_navigation/sidebar/sidebar_menu_clipper.dart';
+import 'package:flutter_sidebar_animation_navigation/theme.dart';
 import 'package:rxdart/rxdart.dart';
 
 class Sidebar extends StatefulWidget {
@@ -13,7 +14,6 @@ class Sidebar extends StatefulWidget {
 
 class _SidebarState extends State<Sidebar>
     with SingleTickerProviderStateMixin<Sidebar> {
-  final double switchButtonWidth = 35;
   final _animationDuration = const Duration(milliseconds: 300);
   AnimationController _animationController;
   StreamController<bool> isSidebarOpenedStreamController;
@@ -55,7 +55,9 @@ class _SidebarState extends State<Sidebar>
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double switchButtonWidth = 40;
+    final double switchButtonHeight = 100;
 
     return StreamBuilder<bool>(
         initialData: false,
@@ -74,90 +76,102 @@ class _SidebarState extends State<Sidebar>
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 20,
+                      horizontal: 10,
                     ),
-                    color: Colors.blue.shade900,
+                    color: sidebarBackgroundColor,
                     child: Column(
                       children: <Widget>[
                         SizedBox(
-                          height: 100,
+                          height: 67,
                         ),
                         ListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 0,
+                          ),
                           title: Text(
                             'Nome do Cliente',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 29,
-                              fontWeight: FontWeight.w800,
-                            ),
+                            style: sidebarUserTitleTextStyle,
                           ),
                           subtitle: Text(
                             'email.do.cliente@localhost.com.br',
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.5),
-                              fontSize: 14,
-                            ),
+                            style: sidebarUserSubtitleTextStyle,
                           ),
                           leading: CircleAvatar(
                             child: Icon(
                               Icons.face,
-                              color: Colors.white70,
+                              size: 40,
                             ),
                             radius: 40,
+                            backgroundColor: primaryColor,
+                            foregroundColor: sidebarBackgroundColor,
                           ),
                         ),
                         Divider(
-                          height: 64,
+                          height: 32,
                           thickness: 0.5,
-                          color: Colors.white.withOpacity(0.5),
+                          color: secondTextColor,
                           indent: 32,
                           endIndent: 32,
                         ),
-                        SidebarItems(
-                          icon: Icons.home,
-                          title: 'Home',
+                        SidebarItem(
+                          icon: Icons.insert_chart,
+                          title: 'Painel',
                           onTap: () {
                             onIconPressed();
                             BlocProvider.of<NavigationBloc>(context)
-                                .add(NavigationEvents.HomePageClickedEvent);
+                                .add(NavigationEvents.PainelPageClickedEvent);
                           },
                         ),
-                        SidebarItems(
-                          icon: Icons.account_box,
-                          title: 'My Account',
-                          onTap: () {
-                            onIconPressed();
-                            BlocProvider.of<NavigationBloc>(context)
-                                .add(NavigationEvents.MyAccountClickedEvent);
-                          },
-                        ),
-                        SidebarItems(
+                        SidebarItem(
                           icon: Icons.shopping_bag,
-                          title: 'My Orders',
+                          title: 'Pedidos',
                           onTap: () {
                             onIconPressed();
                             BlocProvider.of<NavigationBloc>(context)
-                                .add(NavigationEvents.MyOrdersClickedEvent);
+                                .add(NavigationEvents.PedidosClickedEvent);
                           },
                         ),
-                        SidebarItems(
-                          icon: Icons.card_giftcard,
-                          title: 'Wishlist',
+                        SidebarItem(
+                          icon: Icons.download_sharp,
+                          title: 'Downloads',
+                          onTap: () {
+                            onIconPressed();
+                            BlocProvider.of<NavigationBloc>(context)
+                                .add(NavigationEvents.DownloadsClickedEvent);
+                          },
+                        ),
+                        SidebarItem(
+                          icon: Icons.room,
+                          title: 'Endereços',
+                          onTap: () {
+                            onIconPressed();
+                            BlocProvider.of<NavigationBloc>(context)
+                                .add(NavigationEvents.EnderecosClickedEvent);
+                          },
+                        ),
+                        SidebarItem(
+                          icon: Icons.account_box,
+                          title: 'Sua conta',
+                          onTap: () {
+                            onIconPressed();
+                            BlocProvider.of<NavigationBloc>(context)
+                                .add(NavigationEvents.SuaContaClickedEvent);
+                          },
                         ),
                         Divider(
-                          height: 64,
+                          height: 32,
                           thickness: 0.5,
-                          color: Colors.white.withOpacity(0.5),
+                          color: secondTextColor,
                           indent: 32,
                           endIndent: 32,
                         ),
-                        SidebarItems(
+                        SidebarItem(
                           icon: Icons.settings,
-                          title: 'Settings',
+                          title: 'Configurações',
                         ),
-                        SidebarItems(
+                        SidebarItem(
                           icon: Icons.exit_to_app,
-                          title: 'Logout',
+                          title: 'Sair',
                         ),
                       ],
                     ),
@@ -173,13 +187,13 @@ class _SidebarState extends State<Sidebar>
                       clipper: SidebarMenuClipper(),
                       child: Container(
                         width: switchButtonWidth,
-                        height: 110,
-                        color: Colors.blue.shade900,
+                        height: switchButtonHeight,
+                        color: sidebarBackgroundColor,
                         alignment: Alignment.center,
                         child: AnimatedIcon(
                           icon: AnimatedIcons.menu_close,
                           progress: _animationController.view,
-                          color: Colors.white70,
+                          color: primaryTextColor,
                           size: 25,
                         ),
                       ),
